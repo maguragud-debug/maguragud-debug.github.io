@@ -1,83 +1,262 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Моя песочница</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Утепление дома</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #f0f4f8;
-            text-align: center;
-            padding: 50px;
-            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-        .box {
+
+        .container {
             background: white;
-            border-radius: 12px;
-            padding: 30px;
-            max-width: 500px;
-            margin: 0 auto;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
-            color: #2c974b;
+            text-align: center;
+            color: #1a3a5c;
+            margin-bottom: 30px;
+            font-size: 28px;
         }
-        button {
-            padding: 12px 30px;
-            font-size: 18px;
-            background: #2c974b;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
+
+        /* Стили для вкладок */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #e0e7ef;
+            flex-wrap: wrap;
         }
-        button:hover {
-            background: #22863a;
-        }
-        #demo {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
-        }
-        input {
-            padding: 10px;
+
+        .tab-btn {
+            padding: 12px 28px;
             font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            width: 80%;
-            margin-top: 10px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #6b7a8f;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            margin-bottom: -3px;
+        }
+
+        .tab-btn:hover {
+            color: #1a3a5c;
+            background: #f0f4f8;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .tab-btn.active {
+            color: #2c7a4a;
+            border-bottom: 3px solid #2c7a4a;
+        }
+
+        /* Содержимое вкладок */
+        .tab-content {
+            display: none;
+            padding: 20px 5px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h2 {
+            color: #1a3a5c;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .tab-content p {
+            color: #3d4f63;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .tab-content ul {
+            margin-top: 12px;
+            padding-left: 20px;
+            color: #3d4f63;
+            line-height: 1.8;
+        }
+
+        /* Контакты */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eef2f7;
+            font-size: 16px;
+            color: #3d4f63;
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-icon {
+            font-size: 22px;
+            width: 40px;
+            text-align: center;
+        }
+
+        /* Кнопка заказа */
+        .order-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: #2c7a4a;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .order-btn:hover {
+            background: #1f5f38;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+
+            .tab-btn {
+                padding: 10px 16px;
+                font-size: 14px;
+                flex: 1;
+                text-align: center;
+                min-width: 80px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>🧪 Моя песочница</h1>
-        <p>Привет! Это твой первый сайт на GitHub Pages.</p>
-        <p>Попробуй нажать на кнопку:</p>
-        <button id="myButton">Нажми меня</button>
-        <p id="demo">Текст изменится после нажатия...</p>
-        <hr>
-        <p><strong>✏️ Попробуй ввести своё имя:</strong></p>
-        <input type="text" id="nameInput" placeholder="Введите ваше имя...">
-        <button id="greetButton">Поздороваться</button>
-        <p id="greeting"></p>
+
+    <div class="container">
+        <h1>🏠 Утепление дома</h1>
+
+        <!-- Кнопки вкладок -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab1">Утепление дома</button>
+            <button class="tab-btn" data-tab="tab2">Контакты</button>
+            <button class="tab-btn" data-tab="tab3">Заказать</button>
+        </div>
+
+        <!-- Содержимое вкладки 1: Утепление дома -->
+        <div id="tab1" class="tab-content active">
+            <h2>🌡️ Утепление дома</h2>
+            <p>
+                Мы предлагаем профессиональное утепление домов и квартир. 
+                Используем только качественные материалы: минеральная вата, 
+                пенополистирол, эковата. Утепляем стены, крыши, полы и фасады.
+            </p>
+            <ul>
+                <li>✅ Снижение затрат на отопление до 40%</li>
+                <li>✅ Защита от плесени и сырости</li>
+                <li>✅ Гарантия до 10 лет на материалы и работы</li>
+                <li>✅ Бесплатный выезд мастера на замер</li>
+            </ul>
+        </div>
+
+        <!-- Содержимое вкладки 2: Контакты -->
+        <div id="tab2" class="tab-content">
+            <h2>📞 Контакты</h2>
+            <p>Свяжитесь с нами любым удобным способом:</p>
+
+            <div class="contact-item">
+                <span class="contact-icon">📱</span>
+                <span><strong>Телефон:</strong> +7 (999) 123-45-67</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <span><strong>Email:</strong> info@uteplenie.ru</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📍</span>
+                <span><strong>Адрес:</strong> г. Москва, ул. Строительная, д. 10</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">🕐</span>
+                <span><strong>Режим работы:</strong> Пн-Пт 9:00–20:00, Сб 10:00–17:00</span>
+            </div>
+        </div>
+
+        <!-- Содержимое вкладки 3: Заказать -->
+        <div id="tab3" class="tab-content">
+            <h2>📝 Заказать услугу</h2>
+            <p>
+                Оставьте заявку, и мы свяжемся с вами в течение 30 минут, 
+                чтобы обсудить все детали и рассчитать стоимость утепления.
+            </p>
+            <ul>
+                <li>🔹 Бесплатная консультация по материалам</li>
+                <li>🔹 Индивидуальный расчёт сметы</li>
+                <li>🔹 Выезд замерщика в удобное для вас время</li>
+                <li>🔹 Работаем по договору с гарантией</li>
+            </ul>
+            <button class="order-btn" onclick="alert('Спасибо! Мы свяжемся с вами в ближайшее время. 📞')">
+                Оставить заявку
+            </button>
+        </div>
     </div>
 
     <script>
-        // Кнопка "Нажми меня"
-        document.getElementById('myButton').addEventListener('click', function() {
-            document.getElementById('demo').innerHTML = '🎉 Код сработал! Ты великолепен!';
-        });
+        // Получаем все кнопки вкладок и все блоки с содержимым
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
 
-        // Кнопка "Поздороваться"
-        document.getElementById('greetButton').addEventListener('click', function() {
-            var name = document.getElementById('nameInput').value;
-            if (name) {
-                document.getElementById('greeting').innerHTML = '👋 Привет, ' + name + '! Рад тебя видеть!';
-            } else {
-                document.getElementById('greeting').innerHTML = '😅 Напиши сначала своё имя!';
-            }
+        // Для каждой кнопки добавляем обработчик клика
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Убираем класс active у всех кнопок
+                tabBtns.forEach(b => b.classList.remove('active'));
+                // Добавляем класс active текущей кнопке
+                this.classList.add('active');
+
+                // Убираем класс active у всех блоков с содержимым
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Показываем нужный блок по id, который указан в data-tab
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
         });
     </script>
+
 </body>
 </html>
