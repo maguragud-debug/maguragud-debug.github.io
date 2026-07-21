@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Утепление дома</title>
+    <title>Утеплення будинку</title>
     <style>
         * {
             margin: 0;
@@ -37,7 +37,6 @@
             font-size: 28px;
         }
 
-        /* Стили для вкладок */
         .tabs {
             display: flex;
             gap: 5px;
@@ -70,7 +69,6 @@
             border-bottom: 3px solid #2c7a4a;
         }
 
-        /* Содержимое вкладок */
         .tab-content {
             display: none;
             padding: 20px 5px;
@@ -105,7 +103,6 @@
             line-height: 1.8;
         }
 
-        /* Контакты */
         .contact-item {
             display: flex;
             align-items: center;
@@ -126,7 +123,6 @@
             text-align: center;
         }
 
-        /* Кнопка заказа */
         .order-btn {
             display: inline-block;
             padding: 14px 40px;
@@ -145,7 +141,6 @@
             background: #1f5f38;
         }
 
-        /* Адаптивность */
         @media (max-width: 500px) {
             .container {
                 padding: 20px;
@@ -168,90 +163,83 @@
 <body>
 
     <div class="container">
-        <h1>🏠 Утепление дома</h1>
+        <h1>🏠 Утеплення будинку</h1>
 
-        <!-- Кнопки вкладок -->
         <div class="tabs">
-            <button class="tab-btn active" data-tab="tab1">Утепление дома</button>
-            <button class="tab-btn" data-tab="tab2">Контакты</button>
-            <button class="tab-btn" data-tab="tab3">Заказать</button>
+            <button class="tab-btn active" data-tab="tab1">Утеплення будинку</button>
+            <button class="tab-btn" data-tab="tab2">Контакти</button>
+            <button class="tab-btn" data-tab="tab3">Замовити</button>
         </div>
 
-        <!-- Содержимое вкладки 1: Утепление дома -->
+        <!-- Вкладка 1: Утеплення будинку -->
         <div id="tab1" class="tab-content active">
-            <h2>🌡️ Утепление дома</h2>
+            <h2>🌡️ Утеплення будинку</h2>
             <p>
-                Мы предлагаем профессиональное утепление домов и квартир. 
-                Используем только качественные материалы: минеральная вата, 
-                пенополистирол, эковата. Утепляем стены, крыши, полы и фасады.
+                Ми пропонуємо професійне утеплення будинків та квартир.
+                Використовуємо лише якісні матеріали: мінеральна вата,
+                пінополістирол, ековата. Утеплюємо стіни, дахи, підлоги та фасади.
             </p>
             <ul>
-                <li>✅ Снижение затрат на отопление до 40%</li>
-                <li>✅ Защита от плесени и сырости</li>
-                <li>✅ Гарантия до 10 лет на материалы и работы</li>
-                <li>✅ Бесплатный выезд мастера на замер</li>
+                <li>✅ Зниження витрат на опалення до 40%</li>
+                <li>✅ Захист від плісняви та вогкості</li>
+                <li>✅ Гарантія до 10 років на матеріали та роботи</li>
+                <li>✅ Безкоштовний виїзд майстра на замір</li>
             </ul>
         </div>
 
-        <!-- Содержимое вкладки 2: Контакты -->
+        <!-- Вкладка 2: Контакти (УКРАЇНА) -->
         <div id="tab2" class="tab-content">
-            <h2>📞 Контакты</h2>
-            <p>Свяжитесь с нами любым удобным способом:</p>
+            <h2>📞 Контакти</h2>
+            <p>Зв'яжіться з нами будь-яким зручним способом:</p>
 
             <div class="contact-item">
                 <span class="contact-icon">📱</span>
-                <span><strong>Телефон:</strong> +7 (999) 123-45-67</span>
+                <span><strong>Телефон:</strong> +38 (067) 123-45-67</span>
             </div>
             <div class="contact-item">
                 <span class="contact-icon">📧</span>
-                <span><strong>Email:</strong> info@uteplenie.ru</span>
+                <span><strong>Email:</strong> info@uteplennya.kiev.ua</span>
             </div>
             <div class="contact-item">
                 <span class="contact-icon">📍</span>
-                <span><strong>Адрес:</strong> г. Москва, ул. Строительная, д. 10</span>
+                <span><strong>Адреса:</strong> м. Київ, вул. Хрещатик, 22</span>
             </div>
             <div class="contact-item">
                 <span class="contact-icon">🕐</span>
-                <span><strong>Режим работы:</strong> Пн-Пт 9:00–20:00, Сб 10:00–17:00</span>
+                <span><strong>Графік роботи:</strong> Пн-Пт 9:00–20:00, Сб 10:00–17:00</span>
             </div>
         </div>
 
-        <!-- Содержимое вкладки 3: Заказать -->
+        <!-- Вкладка 3: Замовити -->
         <div id="tab3" class="tab-content">
-            <h2>📝 Заказать услугу</h2>
+            <h2>📝 Замовити послугу</h2>
             <p>
-                Оставьте заявку, и мы свяжемся с вами в течение 30 минут, 
-                чтобы обсудить все детали и рассчитать стоимость утепления.
+                Залиште заявку, і ми зв'яжемося з вами протягом 30 хвилин,
+                щоб обговорити всі деталі та розрахувати вартість утеплення.
             </p>
             <ul>
-                <li>🔹 Бесплатная консультация по материалам</li>
-                <li>🔹 Индивидуальный расчёт сметы</li>
-                <li>🔹 Выезд замерщика в удобное для вас время</li>
-                <li>🔹 Работаем по договору с гарантией</li>
+                <li>🔹 Безкоштовна консультація з матеріалів</li>
+                <li>🔹 Індивідуальний розрахунок кошторису</li>
+                <li>🔹 Виїзд замірника у зручний для вас час</li>
+                <li>🔹 Працюємо за договором з гарантією</li>
             </ul>
-            <button class="order-btn" onclick="alert('Спасибо! Мы свяжемся с вами в ближайшее время. 📞')">
-                Оставить заявку
+            <button class="order-btn" onclick="alert('Дякуємо! Ми зв\'яжемося з вами найближчим часом. 📞')">
+                Залишити заявку
             </button>
         </div>
     </div>
 
     <script>
-        // Получаем все кнопки вкладок и все блоки с содержимым
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
 
-        // Для каждой кнопки добавляем обработчик клика
         tabBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                // Убираем класс active у всех кнопок
                 tabBtns.forEach(b => b.classList.remove('active'));
-                // Добавляем класс active текущей кнопке
                 this.classList.add('active');
 
-                // Убираем класс active у всех блоков с содержимым
                 tabContents.forEach(content => content.classList.remove('active'));
 
-                // Показываем нужный блок по id, который указан в data-tab
                 const tabId = this.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
             });
