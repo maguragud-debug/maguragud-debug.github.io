@@ -1,94 +1,497 @@
-// ===== КОНТЕКСТНОЕ МЕНЮ =====
-const phoneLink = document.getElementById('phoneLink');
-const contextMenu = document.getElementById('contextMenu');
-const menuCopyLink = document.getElementById('menuCopyLink');
-const backHomeBtn = document.getElementById('backHomeBtn');
-const submitBtn = document.getElementById('submitBtn');
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M47MTB3L');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Утеплення будинку</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 { text-align: center; color: #1a3a5c; margin-bottom: 30px; font-size: 28px; }
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #e0e7ef;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #6b7a8f;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            margin-bottom: -3px;
+        }
+        .tab-btn:hover { color: #1a3a5c; background: #f0f4f8; border-radius: 8px 8px 0 0; }
+        .tab-btn.active { color: #2c7a4a; border-bottom: 3px solid #2c7a4a; }
+        .tab-content { display: none; padding: 20px 5px; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content h2 { color: #1a3a5c; margin-bottom: 15px; font-size: 22px; }
+        .tab-content p { color: #3d4f63; line-height: 1.7; font-size: 16px; }
+        .tab-content ul { margin-top: 12px; padding-left: 20px; color: #3d4f63; line-height: 1.8; }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eef2f7;
+            font-size: 16px;
+            color: #3d4f63;
+        }
+        .contact-item:last-child { border-bottom: none; }
+        .contact-icon { font-size: 22px; width: 40px; text-align: center; }
+        
+        .phone-link {
+            color: #1a3a5c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        .phone-link:hover { color: #2c7a4a; text-decoration: underline; }
+        .phone-link strong { color: #1a3a5c; }
+        
+        .order-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: #2c7a4a;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 15px;
+        }
+        .order-btn:hover { background: #1f5f38; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-weight: 600; color: #1a3a5c; margin-bottom: 5px; }
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #dce3ec;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            outline: none;
+            background: #fafcfe;
+        }
+        .form-group input:focus { border-color: #2c7a4a; }
+        .form-group input.error { border-color: #e74c3c; background: #fff5f5; }
+        .error-message { color: #e74c3c; font-size: 14px; margin-top: 5px; display: none; }
+        .form-group input.error + .error-message { display: block; }
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #2c7a4a;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .submit-btn:hover { background: #1f5f38; }
+        .thanks { text-align: center; padding: 30px 20px; }
+        .thanks .icon { font-size: 64px; margin-bottom: 15px; }
+        .thanks h2 { color: #2c7a4a; font-size: 28px; margin-bottom: 10px; }
+        .thanks p { color: #3d4f63; font-size: 18px; line-height: 1.6; }
+        .hidden { display: none !important; }
+        .back-home-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #2c7a4a;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+        .back-home-btn:hover { background: #1f5f38; }
+        .copy-btn {
+            background: #2c7a4a;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+        .copy-btn:hover { background: #1f5f38; }
+        .copy-btn.copied { background: #27ae60; }
 
-const PHONE_NUMBER = '+380671234567';
-const TEL_LINK = 'tel:' + PHONE_NUMBER;
+        .context-menu {
+            display: none;
+            position: fixed;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            padding: 5px 0;
+            z-index: 99999;
+            min-width: 220px;
+            border: 1px solid #e0e0e0;
+        }
+        .context-menu.active { display: block; }
+        .context-menu-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .context-menu-item:hover { background: #f0f4f8; }
 
-// Функция показа меню
-function showMenu(x, y, linkToCopy) {
-    contextMenu.classList.add('active');
-    contextMenu.style.left = x + 'px';
-    contextMenu.style.top = y + 'px';
-    contextMenu.setAttribute('data-link', linkToCopy);
-}
+        @media (max-width: 500px) {
+            .container { padding: 20px; }
+            .tab-btn { padding: 10px 16px; font-size: 14px; flex: 1; text-align: center; min-width: 80px; }
+            h1 { font-size: 22px; }
+            .contact-item { flex-wrap: wrap; }
+            .copy-btn { margin-left: 52px; width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M47MTB3L"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-// Функция скрытия меню
-function hideMenu() {
-    contextMenu.classList.remove('active');
-}
+    <div class="container">
+        <h1>🏠 Утеплення будинку</h1>
 
-// ===== ПРАВЫЙ КЛИК на номере телефона =====
-if (phoneLink) {
-    phoneLink.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        showMenu(e.clientX, e.clientY, TEL_LINK);
-    });
-}
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab1">Утеплення будинку</button>
+            <button class="tab-btn" data-tab="tab2">Контакти</button>
+            <button class="tab-btn" data-tab="tab3">Замовити</button>
+        </div>
 
-// ===== ПРАВЫЙ КЛИК на кнопке "На головну" =====
-if (backHomeBtn) {
-    backHomeBtn.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const currentUrl = window.location.href;
-        showMenu(e.clientX, e.clientY, currentUrl);
-    });
-}
+        <div id="tab1" class="tab-content active">
+            <h2>🌡️ Утеплення будинку</h2>
+            <p>
+                Ми пропонуємо професійне утеплення будинків та квартир.
+                Використовуємо лише якісні матеріали: мінеральна вата,
+                пінополістирол, ековата. Утеплюємо стіни, дахи, підлоги та фасади.
+            </p>
+            <ul>
+                <li>✅ Зниження витрат на опалення до 40%</li>
+                <li>✅ Захист від плісняви та вогкості</li>
+                <li>✅ Гарантія до 10 років на матеріали та роботи</li>
+                <li>✅ Безкоштовний виїзд майстра на замір</li>
+            </ul>
+        </div>
 
-// ===== ПРАВЫЙ КЛИК на кнопке "Відправити заявку" =====
-if (submitBtn) {
-    submitBtn.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        // Копируем ссылку на страницу благодарности (с ?thanks=1)
-        const baseUrl = window.location.href.split('?')[0];
-        const thanksUrl = baseUrl + '?thanks=1';
-        showMenu(e.clientX, e.clientY, thanksUrl);
-    });
-}
+        <div id="tab2" class="tab-content">
+            <h2>📞 Контакти</h2>
+            <p>Зв'яжіться з нами будь-яким зручним способом:</p>
 
-// ===== КЛИК на пункте меню =====
-menuCopyLink.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const linkToCopy = contextMenu.getAttribute('data-link') || window.location.href;
-    
-    navigator.clipboard.writeText(linkToCopy).then(() => {
-        alert('✅ Скопійовано: ' + linkToCopy);
-        hideMenu();
-    }).catch(() => {
-        const textarea = document.createElement('textarea');
-        textarea.value = linkToCopy;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        alert('✅ Скопійовано: ' + linkToCopy);
-        hideMenu();
-    });
-});
+            <div class="contact-item">
+                <span class="contact-icon">📱</span>
+                <a href="tel:+380671234567" class="phone-link" id="phoneLink">
+                    <strong>Телефон:</strong> +38 (067) 123-45-67
+                </a>
+                <button class="copy-btn" data-phone="+380671234567">📋 Копіювати</button>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <span><strong>Email:</strong> info@uteplennya.kiev.ua</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📍</span>
+                <span><strong>Адреса:</strong> м. Київ, вул. Хрещатик, 22</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">🕐</span>
+                <span><strong>Графік роботи:</strong> Пн-Пт 9:00–20:00, Сб 10:00–17:00</span>
+            </div>
+        </div>
 
-// Закрыть меню при клике вне его
-document.addEventListener('click', function(e) {
-    if (!contextMenu.contains(e.target)) {
-        hideMenu();
-    }
-});
+        <div id="tab3" class="tab-content">
+            <div id="formBlock">
+                <h2>📝 Замовити послугу</h2>
+                <p>
+                    Залиште заявку, і ми зв'яжемося з вами протягом 30 хвилин,
+                    щоб обговорити всі деталі та розрахувати вартість утеплення.
+                </p>
+                <ul>
+                    <li>🔹 Безкоштовна консультація з матеріалів</li>
+                    <li>🔹 Індивідуальний розрахунок кошторису</li>
+                    <li>🔹 Виїзд замірника у зручний для вас час</li>
+                    <li>🔹 Працюємо за договором з гарантією</li>
+                </ul>
 
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') hideMenu();
-});
+                <form id="orderForm" style="margin-top: 25px;">
+                    <div class="form-group">
+                        <label for="userName">👤 Ім'я (необов'язково)</label>
+                        <input type="text" id="userName" placeholder="Ваше ім'я">
+                    </div>
+                    <div class="form-group">
+                        <label for="userPhone">📞 Телефон *</label>
+                        <input type="tel" id="userPhone" placeholder="+38 (067) 123-45-67" required>
+                        <div class="error-message" id="phoneError">Будь ласка, введіть номер телефону</div>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">📩 Відправити заявку</button>
+                </form>
+            </div>
 
-document.addEventListener('scroll', function() {
-    hideMenu();
-});
+            <div id="thanksBlock" class="thanks hidden">
+                <div class="icon">✅</div>
+                <h2>Дякуємо!</h2>
+                <p>Вашу заявку прийнято. Ми зв'яжемося з вами <br>найближчим часом. 📞</p>
+                <button class="back-home-btn" id="backHomeBtn" onclick="goHome()">🏠 На головну</button>
+            </div>
+        </div>
+    </div>
 
-window.addEventListener('resize', function() {
-    hideMenu();
-});
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item" id="menuCopyLink">📋 Копіювати адресу посилання</div>
+    </div>
+
+    <script>
+        // ===== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК =====
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                tabContents.forEach(content => content.classList.remove('active'));
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+
+                if (tabId === 'tab3') {
+                    if (window.location.search.includes('thanks')) {
+                        const url = new URL(window.location);
+                        url.searchParams.delete('thanks');
+                        window.history.replaceState({}, '', url);
+                    }
+                    document.getElementById('formBlock').classList.remove('hidden');
+                    document.getElementById('thanksBlock').classList.add('hidden');
+                }
+            });
+        });
+
+        // ===== ФОРМА =====
+        const form = document.getElementById('orderForm');
+        const phoneInput = document.getElementById('userPhone');
+        const phoneError = document.getElementById('phoneError');
+        const formBlock = document.getElementById('formBlock');
+        const thanksBlock = document.getElementById('thanksBlock');
+
+        phoneInput.addEventListener('input', function() {
+            this.classList.remove('error');
+            phoneError.style.display = 'none';
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const phone = phoneInput.value.trim();
+
+            if (phone === '') {
+                phoneInput.classList.add('error');
+                phoneError.style.display = 'block';
+                phoneInput.focus();
+                return;
+            }
+
+            const name = document.getElementById('userName').value.trim() || 'Не вказано';
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'form_submit',
+                'form_name': 'order_form',
+                'user_name': name,
+                'user_phone': phone,
+                'service': 'Утеплення будинку'
+            });
+
+            console.log('✅ Заявка відправлена в GTM:', { name, phone });
+
+            const url = new URL(window.location);
+            url.searchParams.set('thanks', '1');
+            window.history.pushState({}, '', url);
+
+            formBlock.classList.add('hidden');
+            thanksBlock.classList.remove('hidden');
+            form.reset();
+            phoneInput.classList.remove('error');
+            phoneError.style.display = 'none';
+        });
+
+        function goHome() {
+            const url = new URL(window.location);
+            url.searchParams.delete('thanks');
+            window.history.pushState({}, '', url);
+            thanksBlock.classList.add('hidden');
+            formBlock.classList.remove('hidden');
+            document.querySelector('[data-tab="tab1"]').click();
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window.location.search.includes('thanks')) {
+                document.querySelector('[data-tab="tab3"]').click();
+                formBlock.classList.add('hidden');
+                thanksBlock.classList.remove('hidden');
+            }
+        });
+
+        window.addEventListener('popstate', function() {
+            if (!window.location.search.includes('thanks')) {
+                if (!formBlock.classList.contains('hidden')) {
+                    formBlock.classList.remove('hidden');
+                    thanksBlock.classList.add('hidden');
+                }
+            }
+        });
+
+        // ===== КОПИРОВАНИЕ ТЕЛЕФОНА (кнопка) =====
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const phone = this.getAttribute('data-phone');
+                navigator.clipboard.writeText(phone).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = '✅ Скопійовано!';
+                    this.classList.add('copied');
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.classList.remove('copied');
+                    }, 2000);
+                }).catch(() => {
+                    alert('Не вдалося скопіювати номер. Спробуйте вручну.');
+                });
+            });
+        });
+
+        // ===== КОНТЕКСТНОЕ МЕНЮ =====
+        const phoneLink = document.getElementById('phoneLink');
+        const contextMenu = document.getElementById('contextMenu');
+        const menuCopyLink = document.getElementById('menuCopyLink');
+        const backHomeBtn = document.getElementById('backHomeBtn');
+        const submitBtn = document.getElementById('submitBtn');
+
+        const PHONE_NUMBER = '+380671234567';
+        const TEL_LINK = 'tel:' + PHONE_NUMBER;
+
+        function showMenu(x, y, linkToCopy) {
+            contextMenu.classList.add('active');
+            contextMenu.style.left = x + 'px';
+            contextMenu.style.top = y + 'px';
+            contextMenu.setAttribute('data-link', linkToCopy);
+        }
+
+        function hideMenu() {
+            contextMenu.classList.remove('active');
+        }
+
+        // ПРАВЫЙ КЛИК на номере телефона
+        if (phoneLink) {
+            phoneLink.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                showMenu(e.clientX, e.clientY, TEL_LINK);
+            });
+        }
+
+        // ПРАВЫЙ КЛИК на кнопке "На головну"
+        if (backHomeBtn) {
+            backHomeBtn.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const currentUrl = window.location.href;
+                showMenu(e.clientX, e.clientY, currentUrl);
+            });
+        }
+
+        // ПРАВЫЙ КЛИК на кнопке "Відправити заявку"
+        if (submitBtn) {
+            submitBtn.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const baseUrl = window.location.href.split('?')[0];
+                const thanksUrl = baseUrl + '?thanks=1';
+                showMenu(e.clientX, e.clientY, thanksUrl);
+            });
+        }
+
+        // КЛИК на пункте меню
+        menuCopyLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const linkToCopy = contextMenu.getAttribute('data-link') || window.location.href;
+            
+            navigator.clipboard.writeText(linkToCopy).then(() => {
+                alert('✅ Скопійовано: ' + linkToCopy);
+                hideMenu();
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = linkToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('✅ Скопійовано: ' + linkToCopy);
+                hideMenu();
+            });
+        });
+
+        // Закрыть меню при клике вне его
+        document.addEventListener('click', function(e) {
+            if (!contextMenu.contains(e.target)) {
+                hideMenu();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') hideMenu();
+        });
+
+        document.addEventListener('scroll', function() {
+            hideMenu();
+        });
+
+        window.addEventListener('resize', function() {
+            hideMenu();
+        });
+    </script>
+
+</body>
+</html>
