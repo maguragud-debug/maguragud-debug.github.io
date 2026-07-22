@@ -70,7 +70,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .contact-item:last-child { border-bottom: none; }
         .contact-icon { font-size: 22px; width: 40px; text-align: center; }
         
-        /* ===== ТЕЛЕФОН ССЫЛКА ===== */
         .phone-link {
             color: #1a3a5c;
             text-decoration: none;
@@ -158,7 +157,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .copy-btn:hover { background: #1f5f38; }
         .copy-btn.copied { background: #27ae60; }
 
-        /* ===== КАСТОМНОЕ КОНТЕКСТНОЕ МЕНЮ ===== */
         .context-menu {
             display: none;
             position: fixed;
@@ -166,7 +164,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border-radius: 8px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             padding: 5px 0;
-            z-index: 9999;
+            z-index: 99999;
             min-width: 220px;
             border: 1px solid #e0e0e0;
         }
@@ -182,11 +180,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             gap: 10px;
         }
         .context-menu-item:hover { background: #f0f4f8; }
-        .context-menu-divider {
-            height: 1px;
-            background: #e0e0e0;
-            margin: 5px 0;
-        }
 
         @media (max-width: 500px) {
             .container { padding: 20px; }
@@ -198,10 +191,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M47MTB3L"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
     <div class="container">
         <h1>🏠 Утеплення будинку</h1>
@@ -212,7 +203,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <button class="tab-btn" data-tab="tab3">Замовити</button>
         </div>
 
-        <!-- Вкладка 1: Утеплення будинку -->
         <div id="tab1" class="tab-content active">
             <h2>🌡️ Утеплення будинку</h2>
             <p>
@@ -228,7 +218,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </ul>
         </div>
 
-        <!-- Вкладка 2: Контакти -->
         <div id="tab2" class="tab-content">
             <h2>📞 Контакти</h2>
             <p>Зв'яжіться з нами будь-яким зручним способом:</p>
@@ -254,7 +243,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </div>
 
-        <!-- Вкладка 3: Замовити -->
         <div id="tab3" class="tab-content">
             <div id="formBlock">
                 <h2>📝 Замовити послугу</h2>
@@ -279,7 +267,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <input type="tel" id="userPhone" placeholder="+38 (067) 123-45-67" required>
                         <div class="error-message" id="phoneError">Будь ласка, введіть номер телефону</div>
                     </div>
-                    <button type="submit" class="submit-btn">📩 Відправити заявку</button>
+                    <button type="submit" class="submit-btn" id="submitBtn">📩 Відправити заявку</button>
                 </form>
             </div>
 
@@ -287,20 +275,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="icon">✅</div>
                 <h2>Дякуємо!</h2>
                 <p>Вашу заявку прийнято. Ми зв'яжемося з вами <br>найближчим часом. 📞</p>
-                <button class="back-home-btn" onclick="goHome()">🏠 На головну</button>
+                <button class="back-home-btn" id="backHomeBtn" onclick="goHome()">🏠 На головну</button>
             </div>
         </div>
     </div>
 
-    <!-- ===== КАСТОМНОЕ КОНТЕКСТНОЕ МЕНЮ ===== -->
     <div class="context-menu" id="contextMenu">
-        <div class="context-menu-item" id="menuCopyLink">
-            📋 Копіювати адресу посилання
-        </div>
+        <div class="context-menu-item" id="menuCopyLink">📋 Копіювати адресу посилання</div>
     </div>
 
     <script>
-        // ===== Перемикання вкладок =====
+        // ===== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК =====
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
 
@@ -324,7 +309,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             });
         });
 
-        // ===== Обробка форми =====
+        // ===== ФОРМА =====
         const form = document.getElementById('orderForm');
         const phoneInput = document.getElementById('userPhone');
         const phoneError = document.getElementById('phoneError');
@@ -415,60 +400,97 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             });
         });
 
-        // ===== КОНТЕКСТНОЕ МЕНЮ ДЛЯ ТЕЛЕФОНА =====
+        // ===== КОНТЕКСТНОЕ МЕНЮ =====
         const phoneLink = document.getElementById('phoneLink');
         const contextMenu = document.getElementById('contextMenu');
         const menuCopyLink = document.getElementById('menuCopyLink');
+        const backHomeBtn = document.getElementById('backHomeBtn');
+        const submitBtn = document.getElementById('submitBtn'); // НОВОЕ!
 
-        // Телефон для копирования
         const PHONE_NUMBER = '+380671234567';
         const TEL_LINK = 'tel:' + PHONE_NUMBER;
 
-        // При правом клике на номер телефона
-        phoneLink.addEventListener('contextmenu', function(e) {
-            e.preventDefault(); // Отключаем стандартное меню браузера
-            
-            // Показываем кастомное меню
+        // Функция показа меню
+        function showMenu(x, y, linkToCopy) {
             contextMenu.classList.add('active');
-            
-            // Позиционируем меню рядом с курсором
-            contextMenu.style.left = e.clientX + 'px';
-            contextMenu.style.top = e.clientY + 'px';
-        });
+            contextMenu.style.left = x + 'px';
+            contextMenu.style.top = y + 'px';
+            contextMenu.setAttribute('data-link', linkToCopy);
+        }
 
-        // При клике на пункт "Копировать адрес ссылки"
-        menuCopyLink.addEventListener('click', function() {
-            navigator.clipboard.writeText(TEL_LINK).then(() => {
-                alert('✅ Скопійовано: ' + TEL_LINK);
-                contextMenu.classList.remove('active');
+        // Функция скрытия меню
+        function hideMenu() {
+            contextMenu.classList.remove('active');
+        }
+
+        // ===== ПРАВЫЙ КЛИК на номере телефона =====
+        if (phoneLink) {
+            phoneLink.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                showMenu(e.clientX, e.clientY, TEL_LINK);
+            });
+        }
+
+        // ===== ПРАВЫЙ КЛИК на кнопке "На головну" =====
+        if (backHomeBtn) {
+            backHomeBtn.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const currentUrl = window.location.href;
+                showMenu(e.clientX, e.clientY, currentUrl);
+            });
+        }
+
+        // ===== ПРАВЫЙ КЛИК на кнопке "Відправити заявку" =====
+        if (submitBtn) {
+            submitBtn.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const currentUrl = window.location.href.split('?')[0];
+                showMenu(e.clientX, e.clientY, currentUrl);
+            });
+        }
+
+        // ===== КЛИК на пункте меню =====
+        menuCopyLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const linkToCopy = contextMenu.getAttribute('data-link') || window.location.href;
+            
+            navigator.clipboard.writeText(linkToCopy).then(() => {
+                alert('✅ Скопійовано: ' + linkToCopy);
+                hideMenu();
             }).catch(() => {
-                // Fallback: старый способ
                 const textarea = document.createElement('textarea');
-                textarea.value = TEL_LINK;
+                textarea.value = linkToCopy;
                 document.body.appendChild(textarea);
                 textarea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
-                alert('✅ Скопійовано: ' + TEL_LINK);
-                contextMenu.classList.remove('active');
+                alert('✅ Скопійовано: ' + linkToCopy);
+                hideMenu();
             });
         });
 
-        // Закрыть меню при клике в любом месте
-        document.addEventListener('click', function() {
-            contextMenu.classList.remove('active');
-        });
-
-        // Закрыть меню при нажатии Esc
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                contextMenu.classList.remove('active');
+        // Закрыть меню при клике вне его
+        document.addEventListener('click', function(e) {
+            if (!contextMenu.contains(e.target)) {
+                hideMenu();
             }
         });
 
-        // Закрыть меню при скролле
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') hideMenu();
+        });
+
         document.addEventListener('scroll', function() {
-            contextMenu.classList.remove('active');
+            hideMenu();
+        });
+
+        window.addEventListener('resize', function() {
+            hideMenu();
         });
     </script>
 
