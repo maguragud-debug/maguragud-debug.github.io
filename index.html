@@ -233,7 +233,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             display: none !important;
         }
 
-        /* Кнопка возврата в главное меню */
         .back-home-btn {
             display: inline-block;
             padding: 12px 30px;
@@ -252,6 +251,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             background: #1f5f38;
         }
 
+        /* ===== КНОПКА КОПИРОВАНИЯ ===== */
+        .copy-btn {
+            background: #2c7a4a;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: #1f5f38;
+        }
+
+        .copy-btn.copied {
+            background: #27ae60;
+        }
+
         @media (max-width: 500px) {
             .container {
                 padding: 20px;
@@ -267,6 +289,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
             h1 {
                 font-size: 22px;
+            }
+
+            .contact-item {
+                flex-wrap: wrap;
+            }
+
+            .copy-btn {
+                margin-left: 52px;
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -309,6 +341,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="contact-item">
                 <span class="contact-icon">📱</span>
                 <span><strong>Телефон:</strong> +38 (067) 123-45-67</span>
+                <button class="copy-btn" data-phone="+380671234567">📋 Копіювати</button>
             </div>
             <div class="contact-item">
                 <span class="contact-icon">📧</span>
@@ -326,7 +359,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <!-- Вкладка 3: Замовити -->
         <div id="tab3" class="tab-content">
-            <!-- Блок з формою -->
             <div id="formBlock">
                 <h2>📝 Замовити послугу</h2>
                 <p>
@@ -356,7 +388,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </form>
             </div>
 
-            <!-- Блок подяки (прихований за замовчуванням) -->
             <div id="thanksBlock" class="thanks hidden">
                 <div class="icon">✅</div>
                 <h2>Дякуємо!</h2>
@@ -381,11 +412,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 const tabId = this.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
 
-                // При переключении на вкладку "Замовити" показываем форму
                 if (tabId === 'tab3') {
-                    // Если мы на странице thanks, показываем форму
                     if (window.location.search.includes('thanks')) {
-                        // Убираем параметр из URL
                         const url = new URL(window.location);
                         url.searchParams.delete('thanks');
                         window.history.replaceState({}, '', url);
@@ -413,7 +441,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             const phone = phoneInput.value.trim();
 
-            // ===== ВАЛИДАЦІЯ: только телефон обязательный =====
             if (phone === '') {
                 phoneInput.classList.add('error');
                 phoneError.style.display = 'block';
@@ -421,7 +448,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 return;
             }
 
-            // ===== ВІДПРАВКА В GTM =====
             const name = document.getElementById('userName').value.trim() || 'Не вказано';
 
             window.dataLayer = window.dataLayer || [];
@@ -435,16 +461,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             console.log('✅ Заявка відправлена в GTM:', { name, phone });
 
-            // ===== МЕНЯЕМ URL НА /?thanks =====
             const url = new URL(window.location);
             url.searchParams.set('thanks', '1');
             window.history.pushState({}, '', url);
 
-            // ===== ПОКАЗУЄМО СТОРІНКУ ПОДЯКИ =====
             formBlock.classList.add('hidden');
             thanksBlock.classList.remove('hidden');
 
-            // Очищаем форму
             form.reset();
             phoneInput.classList.remove('error');
             phoneError.style.display = 'none';
@@ -452,39 +475,52 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         // ===== Функція повернення на головну =====
         function goHome() {
-            // Убираем параметр thanks из URL
             const url = new URL(window.location);
             url.searchParams.delete('thanks');
             window.history.pushState({}, '', url);
 
-            // Показываем форму, скрываем благодарность
             thanksBlock.classList.add('hidden');
             formBlock.classList.remove('hidden');
 
-            // Переключаемся на вкладку "Утеплення будинку"
             document.querySelector('[data-tab="tab1"]').click();
         }
 
-        // ===== ЕСЛИ URL СОДЕРЖИТ ?thanks, ПОКАЗЫВАЕМ БЛАГОДАРНОСТЬ =====
+        // ===== ЕСЛИ URL СОДЕРЖИТ ?thanks =====
         window.addEventListener('DOMContentLoaded', function() {
             if (window.location.search.includes('thanks')) {
-                // Переключаемся на вкладку "Замовити"
                 document.querySelector('[data-tab="tab3"]').click();
-                // Скрываем форму, показываем благодарность
                 formBlock.classList.add('hidden');
                 thanksBlock.classList.remove('hidden');
             }
         });
 
-        // ===== При нажатии "Назад" в браузере — возвращаем форму =====
+        // ===== При нажатии "Назад" в браузере =====
         window.addEventListener('popstate', function() {
             if (!window.location.search.includes('thanks')) {
-                // Если параметра thanks нет — показываем форму
                 if (!formBlock.classList.contains('hidden')) {
                     formBlock.classList.remove('hidden');
                     thanksBlock.classList.add('hidden');
                 }
             }
+        });
+
+        // ===== КОПИРОВАНИЕ ТЕЛЕФОНА =====
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const phone = this.getAttribute('data-phone');
+                navigator.clipboard.writeText(phone).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = '✅ Скопійовано!';
+                    this.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.classList.remove('copied');
+                    }, 2000);
+                }).catch(() => {
+                    alert('Не вдалося скопіювати номер. Спробуйте вручну.');
+                });
+            });
         });
     </script>
 
