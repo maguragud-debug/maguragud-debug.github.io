@@ -130,6 +130,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             text-align: center;
         }
 
+        /* ===== ССЫЛКА ТЕЛЕФОНА ===== */
+        .phone-link {
+            color: #1a3a5c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .phone-link:hover {
+            color: #2c7a4a;
+            text-decoration: underline;
+        }
+
+        .phone-link strong {
+            color: #1a3a5c;
+        }
+
         .order-btn {
             display: inline-block;
             padding: 14px 40px;
@@ -340,7 +356,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <div class="contact-item">
                 <span class="contact-icon">📱</span>
-                <span><strong>Телефон:</strong> +38 (067) 123-45-67</span>
+                <a href="tel:+380671234567" class="phone-link"><strong>Телефон:</strong> +38 (067) 123-45-67</a>
                 <button class="copy-btn" data-phone="+380671234567">📋 Копіювати</button>
             </div>
             <div class="contact-item">
